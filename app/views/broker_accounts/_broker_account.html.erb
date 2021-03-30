@@ -1,0 +1,13 @@
+<%= turbo_frame_tag dom_id(broker_account) do %>
+  <div class="card mb-1">
+    <div class="card-body d-flex flex-row justify-content-between">
+      <div>
+        <%= broker_account.login  %> - <%= broker_account.description %>
+      </div>
+      <div class="row">
+        <%= link_to "Edit", edit_broker_account_path(broker_account), class: "btn btn-link" %>
+        <%= button_to "Destroy", broker_account, class: "btn btn-link", method: :delete %>
+      </div>
+    </div>
+  </div>
+<% end %>

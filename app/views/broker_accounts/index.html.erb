@@ -1,0 +1,10 @@
+<%= turbo_frame_tag "broker_account_form" do %>
+  <%= render "broker_accounts/new_edit_form", broker_account: BrokerAccount.new, description: "Register Account" %>
+<% end %>
+
+<div class="mt-3">
+  <%= turbo_stream_from "broker_accounts" %>
+  <%= turbo_frame_tag "broker_accounts" do %>
+    <%= render @broker_accounts %>
+  <% end %>
+</div>

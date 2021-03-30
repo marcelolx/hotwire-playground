@@ -1,0 +1,13 @@
+<%= simple_form_for broker_account, id: dom_id(broker_account), local: true, wrapper: :inline_form, html: { class: "form-inline ml-1" } do |f| %>
+  <div class="form-row">
+    <div class="form-group mr-1">
+      <%= f.input :login, label_html: { class: "justify-content-start" } %>
+    </div>
+    <div class="form-group mr-1">
+      <%= f.input :description, label_html: { class: "justify-content-start" } %>
+    </div>
+    <div class="form-group">
+      <%= f.button :submit, class: "btn-success ml-1" %>
+    </div>
+  </div>
+<% end %>

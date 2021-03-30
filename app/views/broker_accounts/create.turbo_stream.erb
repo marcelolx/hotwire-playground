@@ -1,0 +1,2 @@
+<%= turbo_stream.prepend "broker_accounts", @broker_account %>
+<%= turbo_stream.replace BrokerAccount.new, partial: "new_edit_form", locals: { broker_account: BrokerAccount.new, description: 'Register Account' } %>

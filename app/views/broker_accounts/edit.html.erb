@@ -1,0 +1,8 @@
+<%= turbo_frame_tag dom_id(@broker_account) do %>
+  <%=
+    turbo_stream.replace "new_broker_account", partial: "broker_accounts/new_edit_form",
+                                                locals: { broker_account: @broker_account, description: "Update account" }
+  %>
+<% end %>
+
+<%= turbo_stream.remove @broker_account %>
