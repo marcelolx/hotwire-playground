@@ -1,5 +1,5 @@
-<%= turbo_stream.remove @broker_account %>
-<%= turbo_stream.replace @broker_account %>
+<%= turbo_stream.remove broker_account %>
+<%= turbo_stream.replace broker_account %>
 <%= 
   turbo_stream.append "broker_account_form", partial: "broker_accounts/new_edit_form",
                                              locals: { broker_account: BrokerAccount.new, description: "Register Account" } 

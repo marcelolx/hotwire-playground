@@ -5,7 +5,7 @@
         <%= broker_account.login  %> - <%= broker_account.description %>
       </div>
       <div class="row">
-        <%= link_to "Edit", edit_broker_account_path(broker_account), class: "btn btn-link" %>
+        <%= link_to "Edit", "", "data-action": "broker-account#edit", "data-edit-path": edit_broker_account_path(broker_account), class: "btn btn-link" %>
         <%= button_to "Destroy", broker_account, class: "btn btn-link", method: :delete %>
       </div>
     </div>

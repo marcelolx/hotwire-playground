@@ -1,4 +1,10 @@
+
+
 <%= turbo_frame_tag dom_id(@broker_account) do %>
+  <% if params[:editing_broker_account_id].present? %>
+    <%= render "stream_record_back_to_the_list", broker_account: BrokerAccount.find(params[:editing_broker_account_id]) %>
+  <% end %>
+
   <%=
     turbo_stream.replace "new_broker_account", partial: "broker_accounts/new_edit_form",
                                                 locals: { broker_account: @broker_account, description: "Update account" }
