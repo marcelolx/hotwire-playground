@@ -101,7 +101,7 @@ GEM
     nokogiri (1.11.2-x86_64-linux)
       racc (~> 1.4)
     public_suffix (4.0.6)
-    puma (5.2.2)
+    puma (5.3.1)
       nio4r (~> 2.0)
     racc (1.5.2)
     rack (2.2.3)
@@ -192,7 +192,7 @@ DEPENDENCIES
   byebug
   capybara (>= 3.26)
   listen (~> 3.3)
-  puma (~> 5.0)
+  puma (~> 5.3)
   rails (~> 6.1.0)
   redis (~> 4.0)
   selenium-webdriver
