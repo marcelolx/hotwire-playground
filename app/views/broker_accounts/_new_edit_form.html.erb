@@ -1,5 +1,5 @@
 <%= turbo_frame_tag dom_id(broker_account) do %>
-  <div data-broker-account-target="editing_broker_account" data-broker-account-id="<%= broker_account.id %>"></div>
+  <div data-broker-accounts-target="editingBrokerAccount" data-broker-accounts-id="<%= broker_account.id %>"></div>
   <h5><%= description %></h5>
   <%= render "broker_accounts/form", broker_account: broker_account %>
   <%= link_to("Cancel", broker_account) if broker_account.persisted? %>

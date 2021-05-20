@@ -1,5 +1,5 @@
-<div data-controller="broker-account">
-  <button data-action="click->broker-account#crazy_action">TEST</button>
+<div data-controller="broker-accounts">
+  <button data-action="click->broker-accounts#crazy_action">TEST</button>
   <%= turbo_frame_tag "broker_account_form" do %>
     <%= render "broker_accounts/new_edit_form", broker_account: BrokerAccount.new, description: "Register Account" %>
   <% end %>
