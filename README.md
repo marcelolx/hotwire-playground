@@ -1,2 +1,2 @@
-# README
+# Hotwire and StimulusJS playground
 
