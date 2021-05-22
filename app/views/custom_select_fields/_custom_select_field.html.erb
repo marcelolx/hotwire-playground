@@ -1,0 +1,13 @@
+<%= turbo_frame_tag dom_id(custom_select_field) do %>
+  <div class="card mb-1">
+    <div class="card-body d-flex flex-row justify-content-between">
+      <div>
+        <%= custom_select_field.name  %>
+      </div>
+      <div class="row">
+        <%= link_to "Edit", edit_custom_select_field_path(custom_select_field), "data-action": "custom-select-fields#edit", class: "btn btn-link" %>
+        <%= button_to "Destroy", custom_select_field, class: "btn btn-link", method: :delete %>
+      </div>
+    </div>
+  </div>
+<% end %>

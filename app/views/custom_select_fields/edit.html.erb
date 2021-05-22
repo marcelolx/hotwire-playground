@@ -1,0 +1,16 @@
+<%= turbo_frame_tag dom_id(@custom_select_field) do %>
+  <%= turbo_stream.remove @custom_select_field %>
+
+  <% if params[:editing_custom_select_field_id].present? %>
+    <%=
+      render "stream_record_back_to_the_list", 
+        custom_select_field: CustomSelectField.find(params[:editing_custom_select_field_id]) 
+    %>
+  <% end %>
+
+  <%=
+    turbo_stream.replace "new_custom_select_field", 
+      partial: "new_edit_form",
+      locals: { custom_select_field: @custom_select_field, description: "Update select field" }
+  %>
+<% end %>

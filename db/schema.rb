@@ -10,11 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_30_225121) do
+ActiveRecord::Schema.define(version: 2021_05_22_180606) do
 
   create_table "broker_accounts", force: :cascade do |t|
     t.integer "login"
     t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "custom_select_fields", force: :cascade do |t|
+    t.string "name"
+    t.text "choices"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

@@ -1,0 +1,13 @@
+<%= javascript_pack_tag "custom_select_fields", "data-turbo-track": "reload" %>
+
+<div data-controller="custom-select-fields">
+  <%= turbo_frame_tag "custom_select_field_form" do %>
+    <%= render "new_edit_form", custom_select_field: CustomSelectField.new, description: "Register select field" %>
+  <% end %>
+
+  <div class="mt-3">
+    <%= turbo_frame_tag "custom_select_fields" do %>
+      <%= render @custom_select_fields %>
+    <% end %>
+  </div>
+</div>

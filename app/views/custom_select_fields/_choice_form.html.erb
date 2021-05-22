@@ -1,0 +1,18 @@
+<div class="form-group string required">
+  <label class="string required justify-content-start">Choices</label>
+  <div class="input-group">
+    <input class="form-control string required" type="text" name="choice" id="choice-input-field">
+    <div class="input-group-append">
+      <button 
+        class="btn btn-small btn-primary"
+        type="button"
+        data-action="custom-select-fields#addChoice"
+        data-url="<%= new_custom_select_field_choice_url %>"
+        data-method="get"
+      >+</button>
+    </div>
+    <% if error.present? %>
+      <div class="invalid-feedback"><%= error %></div>
+    <% end %>
+  </div>      
+</div>  

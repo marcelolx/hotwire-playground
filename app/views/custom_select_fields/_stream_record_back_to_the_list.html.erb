@@ -1,0 +1,7 @@
+<%= turbo_stream.remove custom_select_field %>
+<%= turbo_stream.append "custom_select_fields", custom_select_field %>
+<%= 
+  turbo_stream.append "custom_select_field_form", 
+    partial: "new_edit_form",
+    locals: { custom_select_field: CustomSelectField.new, description: "Register select field" } 
+%>

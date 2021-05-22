@@ -1,0 +1,14 @@
+<turbo-frame id="choice-<%= choice.parameterize %>">
+  <li class="list-group-item" id="li-choice-<%= choice.parameterize %>">
+    <%= choice %>
+    <span 
+      class="float-right"
+      data-action="click->custom-select-fields#removeChoice"
+      data-url="<%= custom_select_field_choice_url(choice) %>"
+      data-method="delete"
+      role="button"
+    >
+      <i class="bi bi-trash-fill"></i>
+    </span>
+  </li>
+</turbo-frame>

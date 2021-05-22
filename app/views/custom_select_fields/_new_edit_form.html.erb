@@ -1,0 +1,6 @@
+<%= turbo_frame_tag dom_id(custom_select_field) do %>
+  <div data-custom-select-fields-target="editingCustomSelectField" data-custom-select-fields-id="<%= custom_select_field.id %>"></div>
+  <h5><%= description %></h5>
+  <%= render "form", custom_select_field: custom_select_field %>
+  <%= link_to("Cancel", custom_select_field) if custom_select_field.persisted? %>
+<% end %>

@@ -9,5 +9,6 @@ import '../controllers/'
 import "@hotwired/turbo-rails"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
+import 'bootstrap-icons/font/bootstrap-icons.css'
 
 ActiveStorage.start()

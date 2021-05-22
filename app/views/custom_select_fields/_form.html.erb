@@ -1,0 +1,21 @@
+<%= simple_form_for custom_select_field, id: dom_id(custom_select_field) do |f| %>
+  <div class="form-row">
+    <div class="form-group mr-1">
+      <%= f.input :name, label_html: { class: "justify-content-start" } %>
+    </div>
+    <div class="form-group mr-1">
+      <%= f.hidden_field :choices, id: "choices-field" %>
+      <ul class="list-group" id="choices">
+        <turbo-frame id="choice-form">
+          <%= render "choice_form", error: '' %>
+        </turbo-frame>
+        <% custom_select_field.choices.split(";").each do |choice| %>
+          <%= render "choice", choice: choice %>
+        <% end %>
+      </ul>
+    </div>
+    <div class="form-group">
+      <%= f.button :submit, class: "btn-success ml-1 custom-select-field-submit" %>
+    </div>
+  </div>
+<% end %>
