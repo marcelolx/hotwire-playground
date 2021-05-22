@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
+  resource :home, only: :index
   resources :broker_accounts
 
-  root to: 'broker_accounts#index'
+  root to: 'home#index'
 end
