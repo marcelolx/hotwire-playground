@@ -14,7 +14,7 @@ class BrokerAccountsController < ApplicationController
 
     return turbo_stream if @broker_account.save
 
-    render turbo_stream: turbo_stream.replace(@broker_account, partial: "broker_accounts/form",
+    render turbo_stream: turbo_stream.replace(@broker_account, partial: 'form',
                                                                locals: { broker_account: @broker_account })
   end
 
