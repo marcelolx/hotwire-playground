@@ -8,6 +8,7 @@ class CustomSelectFieldChoicesController < ApplicationController
     )
   end
 
-  def delete
+  def destroy
+    render turbo_stream: turbo_stream.remove("choice-#{params[:choice]}")
   end
 end

@@ -17,7 +17,9 @@ export default class extends Controller {
     await request.perform()
   }
 
-  removeChoice (_event) {
-
+  async removeChoice (event) {
+    const targetDataSet = event.currentTarget.dataset
+    const request = new TurboStreamRequest(targetDataSet.method, targetDataSet.url)
+    await request.perform()
   }
 }

@@ -2,7 +2,8 @@
   <div class="form-group string required">
     <label class="string required justify-content-start">Choices</label>
     <div class="input-group">
-      <input class="form-control string required" type="text" name="choice" id="choice-input-field">
+      <% is_invalid_class = error.present? ? "is-invalid" : "" %>
+      <input class="form-control <%= is_invalid_class %> string required" type="text" name="choice" id="choice-input-field">
       <div class="input-group-append">
         <button 
           class="btn btn-small btn-primary"

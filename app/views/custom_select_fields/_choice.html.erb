@@ -4,7 +4,7 @@
     <span 
       class="float-right"
       data-action="click->custom-select-fields#removeChoice"
-      data-url="<%= custom_select_field_choice_url(choice) %>"
+      data-url="<%= custom_select_field_choice_url(choice.parameterize) %>"
       data-method="delete"
       role="button"
     >
