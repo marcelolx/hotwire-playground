@@ -6,9 +6,7 @@
     <div class="form-group mr-1">
       <%= f.hidden_field :choices, id: "choices-field" %>
       <ul class="list-group" id="choices">
-        <turbo-frame id="choice-form">
-          <%= render "choice_form", error: '' %>
-        </turbo-frame>
+        <%= render "choice_form", error: '' %>
         <% custom_select_field.choices.split(";").each do |choice| %>
           <%= render "choice", choice: choice %>
         <% end %>
