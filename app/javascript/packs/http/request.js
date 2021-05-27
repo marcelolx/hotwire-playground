@@ -38,9 +38,8 @@ export class Request {
   }
 
   get csrfToken() {
-    const csrfParam = document.head.querySelector("meta[name=csrf-param]")?.content
-    return csrfParam ? getCookie(csrfParam) : undefined
-  }
+    return getCookie(metaContent("csrf-param")) || metaContent("csrf-token")
+  }  
 
   get contentType() {
     if (this.options.contentType) {
@@ -87,4 +86,9 @@ function compact(object) {
     }
   }
   return result
+}
+
+function metaContent (name) {
+  const element = document.head.querySelector(`meta[name="${name}"]`)
+  return element && element.content
 }
