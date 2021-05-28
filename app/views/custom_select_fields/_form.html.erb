@@ -6,7 +6,7 @@
     <div class="form-group mr-1">
       <%= f.hidden_field :choices, id: "choices-field" %>
       <ul class="list-group" id="choices">
-        <%= render "choice_form", error: '' %>
+        <%= render "choice_form", error: custom_select_field.errors.full_messages_for(:choices).join("<br>") %>
         <% custom_select_field.choices.split(";").each do |choice| %>
           <%= render "choice", choice: choice %>
         <% end %>
