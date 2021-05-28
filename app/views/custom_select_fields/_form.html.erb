@@ -4,7 +4,7 @@
       <%= f.input :name, label_html: { class: "justify-content-start" } %>
     </div>
     <div class="form-group mr-1">
-      <%= f.hidden_field :choices, id: "choices-field" %>
+      <%= render "hidden_choices", choices: f.object.choices %>
       <ul class="list-group" id="choices">
         <%= render "choice_form", error: custom_select_field.errors.full_messages_for(:choices).join("<br>") %>
         <% custom_select_field.choices.split(";").each do |choice| %>

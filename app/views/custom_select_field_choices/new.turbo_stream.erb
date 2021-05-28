@@ -1,2 +1,3 @@
 <%= turbo_stream.replace "choice-form", partial: "custom_select_fields/choice_form", locals: { error: '' } %>
 <%= turbo_stream.append "choices", partial: "custom_select_fields/choice", locals: { choice: params[:choice] } %>
+<%= turbo_stream.replace "choices-field", partial: "custom_select_fields/hidden_choices", locals: { choices: @choices } %>
