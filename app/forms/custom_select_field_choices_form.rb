@@ -1,6 +1,6 @@
 class CustomSelectFieldChoicesForm < ApplicationForm
   attribute :choice
-  attribute :choices, default: []
+  attribute :choices, default: ''
 
   validates :choice, presence: true
   validate :choice_uniqueness
@@ -19,7 +19,7 @@ class CustomSelectFieldChoicesForm < ApplicationForm
     return "" if choices.empty?
 
     choices_list = choices.split(";")
-    choices_list.delete(choice)
+    choices_list.delete_at(choices_list.find_index(choice))
     choices_list.join(";")
   end
 
