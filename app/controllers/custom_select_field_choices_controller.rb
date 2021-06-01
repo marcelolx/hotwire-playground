@@ -1,6 +1,6 @@
 class CustomSelectFieldChoicesController < ApplicationController
   def new
-    @choices = choices
+    @choices = list_of_choices_with_added_choice
     return turbo_stream if params[:choice].present?
 
     render turbo_stream: turbo_stream.replace(
@@ -10,14 +10,23 @@ class CustomSelectFieldChoicesController < ApplicationController
   end
 
   def destroy
-    render turbo_stream: turbo_stream.remove("choice-#{params[:choice]}")
+    @choices = list_of_choices_without_deleted_choice
+    turbo_stream
   end
 
   private
 
-  def choices
+  def list_of_choices_with_added_choice
     return params[:choice] if params[:choices].empty?
 
     "#{params[:choices]};#{params[:choice]}"
+  end
+
+  def list_of_choices_without_deleted_choice
+    return "" if params[:choices].empty?
+
+    choices = params[:choices].split(";")
+    choices.delete(params[:choice])
+    choices.join(";")
   end
 end
