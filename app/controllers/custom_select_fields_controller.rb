@@ -22,7 +22,9 @@ class CustomSelectFieldsController < ApplicationController
   def update
     return turbo_stream if @custom_select_field.update(custom_select_field_params)
 
-    render partial: 'new_edit_form', locals: { custom_select_field: @custom_select_field, description: 'Update select field' }
+    render partial: 'new_edit_form', locals: {
+      custom_select_field: @custom_select_field, description: 'Update select field'
+    }
   end
 
   def destroy

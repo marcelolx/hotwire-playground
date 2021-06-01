@@ -9,7 +9,7 @@ class CustomSelectFieldChoicesController < ApplicationController
 
     render turbo_stream: turbo_stream.replace(
       'choice-form',
-      partial: 'custom_select_fields/choice_form', locals: { error: @form.errors.values.join("<br>") }
+      partial: 'custom_select_fields/choice_form', locals: { error: @form.errors.values.join('<br>') }
     )
   end
 
