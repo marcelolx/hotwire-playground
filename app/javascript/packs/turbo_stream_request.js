@@ -1,4 +1,4 @@
-import { Request } from '../packs/http/request'
+import { Request } from 'rails-fetch'
 import { Turbo } from "@hotwired/turbo-rails"
 
 export class TurboStreamRequest {
@@ -19,6 +19,6 @@ export class TurboStreamRequest {
   }
 
   fetchOptions () {
-    return { responseKind: "text/vnd.turbo-stream.html" }
+    return { responseKind: "turbo-stream" }
   }
 }
