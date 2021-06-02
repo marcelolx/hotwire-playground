@@ -1,4 +1,4 @@
-import { Request } from 'rails-fetch'
+import { Request } from '@rails/request.js'
 import { Turbo } from "@hotwired/turbo-rails"
 
 export class TurboStreamRequest {
