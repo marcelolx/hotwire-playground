@@ -881,10 +881,10 @@
   dependencies:
     spark-md5 "^3.0.0"
 
-"@rails/request.js@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@rails/request.js/-/request.js-0.0.2.tgz#a99138dc4a7d46f2d707fb9d47b41c2d4af2fb3e"
-  integrity sha512-zvVyxP8bcRN7chp3wuVjifC+ORyXCjO6g7R6cm5PFrrCeubiL899g4xeyL918c7CUA07qijTUdop3tqzcuOMDg==
+"@rails/request.js@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@rails/request.js/-/request.js-0.0.3.tgz#98689fda25232c3a8d26554b1a018fc4e895701b"
+  integrity sha512-i4q6bhp/yeNeaPCAidZwTg6FYb1MwpM0PQMK2ycWJDm5+yv7RLTjUGdgoMzPDrVWuOBGg/jUD9DZp+JyiGTuaQ==
 
 "@rails/webpacker@5.2.1":
   version "5.2.1"

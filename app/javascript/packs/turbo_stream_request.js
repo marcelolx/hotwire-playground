@@ -1,5 +1,4 @@
-import { Request } from '@rails/request.js'
-import { Turbo } from "@hotwired/turbo-rails"
+import { FetchRequest } from '@rails/request.js'
 
 export class TurboStreamRequest {
   constructor (method, url, options = {}) {
@@ -9,11 +8,8 @@ export class TurboStreamRequest {
   }
 
   async perform () {
-    const request = new Request(this.method, this.url, this.options)
+    const request = new FetchRequest(this.method, this.url, this.options)
     const response = await request.perform()
-    if (response.ok) {
-      Turbo.renderStreamMessage(await response.text)
-    }
 
     return response;
   }
