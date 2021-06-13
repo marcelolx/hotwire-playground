@@ -1,20 +1,9 @@
 import { FetchRequest } from '@rails/request.js'
 
-export class TurboStreamRequest {
-  constructor (method, url, options = {}) {
-    this.method = method
-    this.url = url
-    this.options =  { ...this.fetchOptions(), ...options }
-  }
-
-  async perform () {
-    const request = new FetchRequest(this.method, this.url, this.options)
-    const response = await request.perform()
-
-    return response;
-  }
-
-  fetchOptions () {
-    return { responseKind: "turbo-stream" }
-  }
+async function performTurboStreamRequest (method, url, options) {
+  const fetchOptions = { responseKind: 'turbo-stream' }
+  const request = new FetchRequest(method, url, { ...fetchOptions, ...options })
+  return await request.perform()
 }
+
+export { performTurboStreamRequest }

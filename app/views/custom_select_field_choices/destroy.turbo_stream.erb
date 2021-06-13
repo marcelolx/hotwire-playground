@@ -1,2 +1,2 @@
-<%= turbo_stream.remove("choice-#{params[:choice]}") %>
+<%= turbo_stream.remove("choice-#{params[:choice].parameterize}") %>
 <%= turbo_stream.replace "choices-field", partial: "custom_select_fields/hidden_choices", locals: { choices: @choices } %>
