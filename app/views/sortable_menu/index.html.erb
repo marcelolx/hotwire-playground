@@ -6,7 +6,7 @@
       class="list-group-item"
     >
       <%= menu.name %>
-      <ul data-sortable-target="nestedMenu" class="list-group">
+      <ul data-sortable-target="nestedMenu" id="nested-menu-<%= menu.id %>" class="list-group">
         <% menu.sub_menus.each do |sub_menu| %>
           <li
             data-sortable-update-url="<%= sortable_menu_sortable_sub_menu_path(menu, sub_menu) %>"

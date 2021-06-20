@@ -16,14 +16,14 @@ export default class extends Controller {
     this.sortable = new Sortable(this.element, this.options)
     this.nestedSortable = []
     this.nestedMenuTargets.forEach((nestedMenu) => {
-      this.nestedSortable.push(new Sortable(nestedMenu, this.nestedOptions))
+      this.nestedSortable.push(new Sortable(nestedMenu, this.nestedOptions(nestedMenu.id)))
     })
   }
 
   disconnect () {
     this.sortable.destroy()
     this.sortable = undefined
-    this.nestedMenuTargets.forEach((nestedMenu) => { nestedMenu.destroy() })
+    this.nestedSortable.forEach((nestedMenu) => { nestedMenu.destroy() })
     this.nestedSortable = undefined
   }
 
@@ -60,10 +60,10 @@ export default class extends Controller {
     }
   }
 
-  get nestedOptions () {
+  nestedOptions (id) {
     return {
       animation: 150,
-      group: 'nested',
+      group: `nested-${id}`,
       fallbackOnBody: true,
 		  swapThreshold: 0.65,
       onEnd: this.onEndNested,
