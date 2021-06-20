@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :sortable_menu, only: %i[index update] do
     resources :sortable_sub_menu, only: :update
   end
+  resources :people, only: :index
 
   root to: 'home#index'
 end
