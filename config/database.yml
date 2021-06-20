@@ -21,5 +21,8 @@ test:
   database: db/test.sqlite3
 
 production:
-  <<: *default
-  database: db/production.sqlite3
+  adapter: postgresql
+  encoding: unicode
+  prepared_statements: false
+  pool: <%= ENV["SIDEKIQ_THREADS"] ? (Integer(ENV["SIDEKIQ_THREADS"]) * 2) + 1 : nil || ENV["RAILS_MAX_THREADS"] %>
+  url: <%= ENV['DATABASE_URL'] %>

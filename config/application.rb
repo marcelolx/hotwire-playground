@@ -31,5 +31,10 @@ module HotwirePlayground
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    config.cache_store = :redis_cache_store, {
+      url: ENV["REDISCLOUD_URL"],
+      namespace: "hotwire-playground-cache"
+    }
   end
 end
