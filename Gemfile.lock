@@ -60,6 +60,8 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
       zeitwerk (~> 2.3)
+    acts_as_list (1.0.4)
+      activerecord (>= 4.2)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     ast (2.4.2)
@@ -233,6 +235,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  acts_as_list
   bootsnap (>= 1.4.4)
   byebug
   capybara (>= 3.26)
@@ -252,4 +255,4 @@ DEPENDENCIES
   webpacker (~> 5.0)
 
 BUNDLED WITH
-   2.2.17
+   2.2.18

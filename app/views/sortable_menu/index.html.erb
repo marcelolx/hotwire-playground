@@ -1,7 +1,22 @@
-<ul data-controller="sortable-menus" class="list-group">
-  <li class="list-group-item">This is Sortable</li>
-  <li class="list-group-item">It works with Bootstrap...</li>
-  <li class="list-group-item">...out of the box.</li>
-  <li class="list-group-item">It has support for touch devices.</li>
-  <li class="list-group-item">Just drag some elements around.</li>
+<ul data-controller="sortable" class="list-group">
+  <% @menus.each do |menu| %>
+    <li
+      data-sortable-update-url="<%= sortable_menu_path(menu) %>"
+      data-resource-name="menu"
+      class="list-group-item"
+    >
+      <%= menu.name %>
+      <ul data-sortable-target="nestedMenu" class="list-group">
+        <% menu.sub_menus.each do |sub_menu| %>
+          <li
+            data-sortable-update-url="<%= sortable_menu_sortable_sub_menu_path(menu, sub_menu) %>"
+            data-resource-name="sub_menu"
+            class="list-group-item"
+          >
+            <%= sub_menu.name %>
+          </li>
+        <% end %>
+      </ul>
+    </li>
+  <% end %>
 </ul>
