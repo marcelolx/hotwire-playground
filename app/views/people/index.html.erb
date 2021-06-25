@@ -1,31 +1,48 @@
 <%= javascript_pack_tag "people", "data-turbo-track": "reload" %>
 <%= stylesheet_pack_tag "people", "data-turbo-track": "reload" %>
 
+<div class="mb-4">
+  <%= simple_form_for :person, local: true, method: :get do |f| %>
+    <div class="form-group">
+      <%= f.input :name %>
+      <%= f.submit :submit, class: "float-right" %>
+    </div>
+  <% end %>
+</div>
+
 <div data-controller="people">
   <table id="people-table">
     <thead>
       <tr>
-        <th>First</th>
-        <th>Last</th>
-        <th>Handle</th>
+        <th>Name</th>
+        <th>Cpf</th>
+        <th>Birthdate</th>
+        <th>Birth Localtion</th>
+        <th>Email</th>
+        <th>Country</th>
+        <th>Address</th>
+        <th>District</th>
+        <th>Phone</th>
+        <th>Cellphone</th>
+        <th>Website</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-      </tr>
-      <tr>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-      </tr>
-      <tr>
-        <td>Larry</td>
-        <td>the Bird</td>
-        <td>@twitter</td>
-      </tr>
+      <% @people.each do |person| %>
+        <tr>
+          <td><%= person.name %></td>
+          <td><%= person.cpf %></td>
+          <td><%= person.birthdate %></td>
+          <td><%= person.birth_location %></td>
+          <td><%= person.email %></td>
+          <td><%= person.country %></td>
+          <td><%= person.address %></td>
+          <td><%= person.district %></td>
+          <td><%= person.phone %></td>
+          <td><%= person.cellphone %></td>
+          <td><%= person.website %></td>
+        </tr>
+      <% end %>
     </tbody>
   </table>
 </div>

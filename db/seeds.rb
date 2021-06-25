@@ -26,3 +26,19 @@ SubMenu.create(
     { name: 'SubMenu 8', menu: menus.second, position: 4 }
   ]
 )
+
+(1..100).each do |_|
+  name = Faker::Name.name
+  Person.create(
+    name: name,
+    cpf: Faker::IDNumber.brazilian_id,
+    birthdate: Faker::Date.birthday(min_age: 18, max_age: 65),
+    email: Faker::Internet.email(name: name),
+    country: Faker::Address.country,
+    address: Faker::Address.street_address,
+    district: Faker::Address.community,
+    phone: Faker::PhoneNumber.phone_number,
+    cellphone: Faker::PhoneNumber.cell_phone,
+    website: Faker::Internet.url
+  )
+end

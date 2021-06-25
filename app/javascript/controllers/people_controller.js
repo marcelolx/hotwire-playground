@@ -3,22 +3,26 @@ import Tabulator from "tabulator-tables"
 
 export default class extends Controller {
   initialize () {
-    //this.headerMenu = this.headerMenu.bind(this)
+    //console.log('initialize')
   }
 
   connect () {
     this.table = new Tabulator("#people-table", {
       layout: "fitColumns",
-      responsiveLayout: true,
+      persistence: {
+        sort: true,
+        columns: true,
+      },
+      persistenceID: "examplePersistence",
       columns: [
-        { 
+        {
           field: "#",
           headerSort: false,
           cssClass: 'menu-header',
           width: 40,
           print: false,
           resizable: false,
-          headerMenu: this.headerMenu 
+          headerMenu: this.headerMenu
         }
       ]
     })
@@ -30,13 +34,14 @@ export default class extends Controller {
   }
 
   headerMenu () {
-    let menu = []
+    const menu = []
     const columns = this.getColumns().filter((column) => column.getField() != "#")
-    
+
     for (const column of columns) {
       const icon = document.createElement("i")
       icon.classList.add('bi')
-      icon.classList.add(column.isVisible() ? 'bi-check-square' : 'square')
+
+      icon.classList.add(column.isVisible() ? 'bi-check-square' : 'bi-square')
 
       const label = document.createElement("span");
       const title = document.createElement("span");
@@ -60,6 +65,8 @@ export default class extends Controller {
             icon.classList.remove("bi-check-square");
             icon.classList.add("bi-square");
           }
+
+          column.getTable().redraw()
         }
       })
     }

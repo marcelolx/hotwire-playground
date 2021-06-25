@@ -21,6 +21,7 @@ gem 'acts_as_list'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
+gem 'faker'
 
 group :production do
   gem 'pg'
