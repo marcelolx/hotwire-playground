@@ -1,19 +1,23 @@
 import { Controller } from "stimulus"
 import Tabulator from "tabulator-tables"
+import { patch } from "@rails/request.js"
 
 export default class extends Controller {
   initialize () {
-    //console.log('initialize')
+    this.persistTableConfig = this.persistTableConfig.bind(this)
+    this.readTableConfig = this.readTableConfig.bind(this)
   }
 
   connect () {
     this.table = new Tabulator("#people-table", {
       layout: "fitColumns",
+      persistenceID: "people-table",
       persistence: {
-        sort: true,
-        columns: true,
+        columns: ["visible"],
       },
-      persistenceID: "examplePersistence",
+      responsiveLayout: true,
+      persistenceWriterFunc: this.persistTableConfig,
+      persistenceReaderFunc: this.readTableConfig,
       columns: [
         {
           field: "#",
@@ -72,5 +76,23 @@ export default class extends Controller {
     }
 
     return menu
+  }
+
+  persistTableConfig (id, type, data) {
+    console.log('read')
+    console.log(id)
+    console.log(type)
+    console.log(data)
+    const body = { identifier: id, type: type, data: data }
+    patch('/table_columns_config', { body: JSON.stringify(body) })
+  }
+
+  readTableConfig (id, type) {
+    // TODO: Compute a digest for the stored config and when rendering the table include this digest as an
+    // html data-attribute to allow access it easily with stimulus value api and compare it with the digest stored
+    // in the localstorage, if the digest matches uses the stored config, otherwise fetches the config from the server
+    console.log('read')
+    console.log(id)
+    console.log(type)
   }
 }
