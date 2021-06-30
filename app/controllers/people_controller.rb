@@ -1,5 +1,6 @@
 class PeopleController < ApplicationController
   def index
+    @table_config = TableColumnsConfig.find_by(identifier: 'tabulator-people-table') || TableColumnsConfig.new
     @people = person_name ? Person.where('name LIKE ?', person_name) : Person.all
   end
 

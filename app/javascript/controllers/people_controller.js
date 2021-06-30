@@ -1,14 +1,18 @@
 import { Controller } from "stimulus"
 import Tabulator from "tabulator-tables"
-import { patch } from "@rails/request.js"
+import { get, patch } from "@rails/request.js"
 
 export default class extends Controller {
+  static values = { digest: String }
+
   initialize () {
     this.persistTableConfig = this.persistTableConfig.bind(this)
     this.readTableConfig = this.readTableConfig.bind(this)
   }
 
   connect () {
+    // TODO: We need to load al tr/th elements and just allow call persist if the data
+    // contains an array with the number of header columns + 1
     this.table = new Tabulator("#people-table", {
       layout: "fitColumns",
       persistenceID: "people-table",
@@ -78,21 +82,52 @@ export default class extends Controller {
     return menu
   }
 
-  persistTableConfig (id, type, data) {
-    console.log('read')
-    console.log(id)
-    console.log(type)
-    console.log(data)
-    const body = { identifier: id, type: type, data: data }
-    patch('/table_columns_config', { body: JSON.stringify(body) })
+  async persistTableConfig (id, type, data) {
+    console.log("persist")
+    const body = { type: type, data: data }
+    const response = await patch(`/table_columns_config/${id}`, { body: JSON.stringify(body), responseKind: 'json' })
+    if (response.ok) {
+      const body = await response.json
+      this.storeTableConfig(id, type, { data: data, digest: body.digest })
+      this.updateTableDigest(body.digest)
+    } else {
+      // TODO: Maybe dispatch a callback and allow the application handle when config isn't persisted?
+    }
   }
 
   readTableConfig (id, type) {
-    // TODO: Compute a digest for the stored config and when rendering the table include this digest as an
-    // html data-attribute to allow access it easily with stimulus value api and compare it with the digest stored
-    // in the localstorage, if the digest matches uses the stored config, otherwise fetches the config from the server
-    console.log('read')
-    console.log(id)
-    console.log(type)
+    const storedKey = `${id}-${type}`
+    const digest = localStorage.getItem(`${storedKey}-digest`)
+    if (this.digestValue == digest) {
+      console.log('loading local config')
+      const config = localStorage.getItem(storedKey)
+      return JSON.parse(config)
+    }
+
+    this.loadTableConfig(id, type)
+    return false
+  }
+
+  async loadTableConfig (id, type) {
+    console.log('loadTableConfig')
+    const url = new URL('/table_columns_config', window.location.origin)
+    url.searchParams.append('identifier', id)
+    url.searchParams.append('type', type)
+    const response = await get(url, { responseKind: 'json' })
+    if (response.ok) {
+      const body = await response.json
+      this.storeTableConfig(id, type, body)
+      this.updateTableDigest(body.digest)
+    }
+  }
+
+  storeTableConfig (id, type, body) {
+    const storageKey = id + '-' + type;
+    localStorage.setItem(storageKey, JSON.stringify(body.data))
+    localStorage.setItem(storageKey + '-digest', body.digest)
+  }
+
+  updateTableDigest (digest) {
+    this.digestValue = digest
   }
 }

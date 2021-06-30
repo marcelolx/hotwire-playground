@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_29_001409) do
+ActiveRecord::Schema.define(version: 2021_06_30_011518) do
 
   create_table "broker_accounts", force: :cascade do |t|
     t.integer "login"
@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(version: 2021_06_29_001409) do
     t.json "config"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "digest"
   end
 
   add_foreign_key "sub_menus", "menus"

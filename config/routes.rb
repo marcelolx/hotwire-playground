@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     resources :sortable_sub_menu, only: :update
   end
   resources :people, only: :index
-  resource :table_columns_config, only: :update
+  resources :table_columns_config, only: %i[index update], param: :identifier
 
   root to: 'home#index'
 end

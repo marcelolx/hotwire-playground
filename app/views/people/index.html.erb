@@ -10,21 +10,21 @@
   <% end %>
 </div>
 
-<div data-controller="people">
+<div data-controller="people" data-people-digest-value="<%= @table_config.digest %>">
   <table id="people-table">
     <thead>
       <tr>
-        <th>Name</th>
-        <th>Cpf</th>
-        <th>Birthdate</th>
-        <th>Birth Localtion</th>
-        <th>Email</th>
-        <th>Country</th>
-        <th>Address</th>
-        <th>District</th>
-        <th>Phone</th>
-        <th>Cellphone</th>
-        <th tabulator-visible=false>Website</th>
+        <th tabulator-visible="<%= column_visible("name") %>">Name</th>
+        <th tabulator-visible="<%= column_visible("cpf") %>">Cpf</th>
+        <th tabulator-visible="<%= column_visible("birthdate") %>">Birthdate</th>
+        <th tabulator-visible="<%= column_visible("birth_location") %>">Birth Location</th>
+        <th tabulator-visible="<%= column_visible("email") %>">Email</th>
+        <th tabulator-visible="<%= column_visible("country") %>">Country</th>
+        <th tabulator-visible="<%= column_visible("address") %>">Address</th>
+        <th tabulator-visible="<%= column_visible("district") %>">District</th>
+        <th tabulator-visible="<%= column_visible("phone") %>">Phone</th>
+        <th tabulator-visible="<%= column_visible("cellphone") %>">Cellphone</th>
+        <th tabulator-visible="<%= column_visible("website") %>">Website</th>
       </tr>
     </thead>
     <tbody>
