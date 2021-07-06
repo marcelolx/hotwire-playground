@@ -1,6 +1,7 @@
 import { Controller } from "stimulus"
 import Tabulator from "tabulator-tables"
 import { get, patch } from "@rails/request.js"
+const sha1 = require("js-sha1")
 
 export default class extends Controller {
   static values = { digest: String }
@@ -8,12 +9,28 @@ export default class extends Controller {
   initialize () {
     this.persistTableConfig = this.persistTableConfig.bind(this)
     this.readTableConfig = this.readTableConfig.bind(this)
+    this.tableTotalHeaders = this.countTableHeaders()
+    this.canPersistConfig = false
   }
 
   connect () {
-    // TODO: We need to load al tr/th elements and just allow call persist if the data
-    // contains an array with the number of header columns + 1
-    this.table = new Tabulator("#people-table", {
+    this.loadTableConfig('tabulator-people-table', 'columns')
+    this.table = this.setupTabulator()
+  }
+
+  disconnect () {
+    this.table.destroy()
+    this.table = undefined
+  }
+
+  countTableHeaders () {
+    const trIndex = 0
+    const thCount = this.element.children["people-table"].children["people-table-header"].children[trIndex].childElementCount
+    return thCount + 1
+  }
+
+  setupTabulator () {
+    return new Tabulator("#people-table", {
       layout: "fitColumns",
       persistenceID: "people-table",
       persistence: {
@@ -34,11 +51,6 @@ export default class extends Controller {
         }
       ]
     })
-  }
-
-  disconnect () {
-    this.table.destroy()
-    this.table = undefined
   }
 
   headerMenu () {
@@ -83,6 +95,14 @@ export default class extends Controller {
   }
 
   async persistTableConfig (id, type, data) {
+    if (!this.canPersistConfig) {
+      this.canPersistConfig = data.length == this.tableTotalHeaders
+      return
+    }
+
+    if (this.calculateConfigDigest(data) == this.digestValue)
+      return
+
     console.log("persist")
     const body = { type: type, data: data }
     const response = await patch(`/table_columns_config/${id}`, { body: JSON.stringify(body), responseKind: 'json' })
@@ -96,19 +116,26 @@ export default class extends Controller {
   }
 
   readTableConfig (id, type) {
-    const storedKey = `${id}-${type}`
+    const storedKey = this.tableConfigKey(id, type)
     const digest = localStorage.getItem(`${storedKey}-digest`)
     if (this.digestValue == digest) {
       console.log('loading local config')
-      const config = localStorage.getItem(storedKey)
-      return JSON.parse(config)
+      return this.readStoredConfig(storedKey)
     }
 
-    this.loadTableConfig(id, type)
     return false
   }
 
+  readStoredConfig (storedKey) {
+    const config = localStorage.getItem(storedKey)
+    return JSON.parse(config)
+  }
+
   async loadTableConfig (id, type) {
+    const storageKey = this.tableConfigKey(id, type);
+    if (this.calculateStoredConfigDigest(storageKey) == this.digestValue)
+      return
+
     console.log('loadTableConfig')
     const url = new URL('/table_columns_config', window.location.origin)
     url.searchParams.append('identifier', id)
@@ -121,10 +148,24 @@ export default class extends Controller {
     }
   }
 
+  calculateStoredConfigDigest (storedKey) {
+    const config = this.readStoredConfig(storedKey)
+    return this.calculateConfigDigest(config)
+  }
+
+  calculateConfigDigest (config) {
+    const maped_config = config.map(el => Object.keys(el).map(key => `${key}:${el[key]}` ).join("::") ).join("|")
+    return sha1(maped_config)
+  }
+
   storeTableConfig (id, type, body) {
-    const storageKey = id + '-' + type;
+    const storageKey = this.tableConfigKey(id, type);
     localStorage.setItem(storageKey, JSON.stringify(body.data))
     localStorage.setItem(storageKey + '-digest', body.digest)
+  }
+
+  tableConfigKey (id, type) {
+    return id + '-' + type
   }
 
   updateTableDigest (digest) {

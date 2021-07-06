@@ -4,6 +4,7 @@ class TableColumnsConfig < ApplicationRecord
   private
 
   def calculate_digest
-    self.digest = Digest::SHA1.hexdigest(config.to_json)
+    maped_config = config.map { |el| el.keys.map { |key| "#{key}:#{el[key]}" }.join('::') }.join('|')
+    self.digest = Digest::SHA1.hexdigest(maped_config)
   end
 end

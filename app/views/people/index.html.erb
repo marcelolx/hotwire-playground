@@ -12,7 +12,7 @@
 
 <div data-controller="people" data-people-digest-value="<%= @table_config.digest %>">
   <table id="people-table">
-    <thead>
+    <thead id="people-table-header">
       <tr>
         <th tabulator-visible="<%= column_visible("name") %>">Name</th>
         <th tabulator-visible="<%= column_visible("cpf") %>">Cpf</th>
@@ -27,7 +27,7 @@
         <th tabulator-visible="<%= column_visible("website") %>">Website</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody id="people-table-header">
       <% @people.each do |person| %>
         <tr>
           <td><%= person.name %></td>
