@@ -27,7 +27,7 @@ SubMenu.create(
   ]
 )
 
-(1..100).each do |_|
+(1..10_000).each do |_|
   name = Faker::Name.name
   Person.create(
     name: name,

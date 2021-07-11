@@ -4,7 +4,7 @@ import { get, patch } from "@rails/request.js"
 const sha1 = require("js-sha1")
 
 export default class extends Controller {
-  static values = { digest: String }
+  static values = { digest: String, url: String }
 
   initialize () {
     this.persistTableConfig = this.persistTableConfig.bind(this)
@@ -39,6 +39,9 @@ export default class extends Controller {
       responsiveLayout: true,
       persistenceWriterFunc: this.persistTableConfig,
       persistenceReaderFunc: this.readTableConfig,
+      pagination: "remote",
+      ajaxURL: this.urlValue,
+      ajaxSorting: true,
       columns: [
         {
           field: "#",
@@ -103,7 +106,6 @@ export default class extends Controller {
     if (this.calculateConfigDigest(data) == this.digestValue)
       return
 
-    console.log("persist")
     const body = { type: type, data: data }
     const response = await patch(`/table_columns_config/${id}`, { body: JSON.stringify(body), responseKind: 'json' })
     if (response.ok) {
@@ -136,7 +138,6 @@ export default class extends Controller {
     if (this.calculateStoredConfigDigest(storageKey) == this.digestValue)
       return
 
-    console.log('loadTableConfig')
     const url = new URL('/table_columns_config', window.location.origin)
     url.searchParams.append('identifier', id)
     url.searchParams.append('type', type)

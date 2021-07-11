@@ -10,7 +10,10 @@
   <% end %>
 </div>
 
-<div data-controller="people" data-people-digest-value="<%= @table_config.digest %>">
+<div data-controller="people"
+     data-people-digest-value="<%= @table_config.digest %>"
+     data-people-url-value="<%= people_path %>"
+>
   <table id="people-table">
     <thead id="people-table-header">
       <tr>
@@ -28,21 +31,7 @@
       </tr>
     </thead>
     <tbody id="people-table-header">
-      <% @people.each do |person| %>
-        <tr>
-          <td><%= person.name %></td>
-          <td><%= person.cpf %></td>
-          <td><%= person.birthdate %></td>
-          <td><%= person.birth_location %></td>
-          <td><%= person.email %></td>
-          <td><%= person.country %></td>
-          <td><%= person.address %></td>
-          <td><%= person.district %></td>
-          <td><%= person.phone %></td>
-          <td><%= person.cellphone %></td>
-          <td><%= person.website %></td>
-        </tr>
-      <% end %>
+
     </tbody>
   </table>
 </div>

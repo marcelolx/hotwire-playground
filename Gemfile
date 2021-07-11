@@ -18,6 +18,8 @@ gem 'turbo-rails'
 
 gem 'simple_form'
 gem 'acts_as_list'
+gem 'jbuilder'
+gem 'kaminari'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
