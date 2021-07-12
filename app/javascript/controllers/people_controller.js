@@ -61,6 +61,15 @@ export default class extends Controller {
     const columns = this.getColumns().filter((column) => column.getField() != "#")
 
     for (const column of columns) {
+      // TODO: For now this is OK, but we need a way to hide columns that never should be shown
+      // id of a record is just an example, but we can have a more than just this one
+      // I see two possible options right now
+      //   1. Send a patch to Tabulator to keep `data` attributes, this would allow a lot of possibilities
+      //   2. Between the data-controller definition and the `table` element render some hidden element containing
+      //      the columns that shouldn't be shown in any circumstance
+      if (column.getField() === 'id')
+        continue
+
       const icon = document.createElement("i")
       icon.classList.add('bi')
 
