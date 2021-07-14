@@ -1,5 +1,5 @@
 import { FetchRequest } from "@rails/request.js"
-import { formBody, mergeFormDataEntries } from "./tabulated-helpers"
+import { formBody, generateParamsList, mergeFormDataEntries } from "./tabulated-helpers"
 
 export class UseTabulated {
   constructor (controller, table, form) {
@@ -27,11 +27,21 @@ export class UseTabulated {
     let url = new URL(this.form.action)
     let options = { responseKind: 'json' }
 
-    // TODO: Now we are just sending the form, but we should send the filters/orders make to the table or shouldn't?
+    // TODO: When filters being implemented we should send them too, at least I think
+
+    const mapedSortList = this.table.modules.sort.sortList.map((e) => { return { field: e.field || e.column.field, dir: e.dir } })
     const body = this.body()
     if (this.isIdempotent()) {
+      const sortParamsList = generateParamsList({ sorters: mapedSortList })
+      sortParamsList.forEach((param) => url.searchParams.set(param.key, param.value))
       url = mergeFormDataEntries(url, [...body.entries()])
     } else {
+      // TODO: If we support POST method then to send the sorters we need to do something like this
+      // ----> body.set('sorters', JSON.stringify(rtt))
+      //   OR
+      // ----> const sortParamsList = generateParamsList({ sorters: mapedSortList })
+      // ----> sortParamsList.forEach((param) => body.set(param.key, param.value))
+      // But I'm not sure that it will come to the server as we expect, need to test it
       options["body"] = body
     }
 
