@@ -6,19 +6,19 @@ class PeopleController < ApplicationController
       end
 
       format.json do
-        @people = Person.page(permitted_params[:page]).per(15).order(build_order)
+        @people = Person.page(permitted_params[:page]).per(15).where(build_where).order(build_order)
       end
     end
   end
 
   private
 
-  def person_name
-    person = permitted_params[:person]
-    return unless person.present?
-    return if person[:name].empty?
+  def build_where
+    search = permitted_params[:person]
+    return {} unless search.present?
 
-    "%#{person[:name]}%"
+    # FIXME: This simple use case is only one field search, but there could be many
+    Person.arel_table[search.keys.first].matches("%#{search.values.first}%")
   end
 
   def build_order
@@ -29,6 +29,6 @@ class PeopleController < ApplicationController
   end
 
   def permitted_params
-    params.permit(:page, :person, sorters: {})
+    params.permit(:page, person: {}, sorters: {})
   end
 end

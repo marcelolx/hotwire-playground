@@ -1,19 +1,19 @@
 <%= javascript_pack_tag "people", "data-turbo-track": "reload" %>
 <%= stylesheet_pack_tag "people", "data-turbo-track": "reload" %>
 
-<div class="mb-4">
-  <%= simple_form_for :person, local: true, method: :get do |f| %>
-    <div class="form-group">
-      <%= f.input :name %>
-      <%= f.submit :submit, class: "float-right" %>
-    </div>
-  <% end %>
-</div>
-
 <div data-controller="people"
      data-people-digest-value="<%= @table_config.digest %>"
      data-people-url-value="<%= people_path %>"
 >
+  <div class="mb-4">
+    <%= simple_form_for :person, local: true, method: :get, data: { turbo: false, people_target: "tabulated" } do |f| %>
+      <div class="form-group">
+        <%= f.input :name %>
+        <%= f.submit :submit, class: "float-right" %>
+      </div>
+    <% end %>
+  </div>
+
   <table id="people-table">
     <thead id="people-table-header">
       <tr>

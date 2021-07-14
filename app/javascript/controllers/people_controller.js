@@ -2,13 +2,17 @@ import { Controller } from "stimulus"
 import Tabulator from "tabulator-tables"
 import { get, patch } from "@rails/request.js"
 const sha1 = require("js-sha1")
+import { useTabulated } from '../packs/use-tabulated'
+import { formBody, generateParamsList, mergeFormDataEntries } from "../packs/tabulated-helpers"
 
 export default class extends Controller {
   static values = { digest: String, url: String }
+  static targets = ["tabulated"]
 
   initialize () {
     this.persistTableConfig = this.persistTableConfig.bind(this)
     this.readTableConfig = this.readTableConfig.bind(this)
+    this.buildAjaxURL = this.buildAjaxURL.bind(this)
     this.tableTotalHeaders = this.countTableHeaders()
     this.canPersistConfig = false
   }
@@ -16,6 +20,7 @@ export default class extends Controller {
   connect () {
     this.loadTableConfig('tabulator-people-table', 'columns')
     this.table = this.setupTabulator()
+    useTabulated(this, this.table, this.tabulatedTarget)
   }
 
   disconnect () {
@@ -42,6 +47,7 @@ export default class extends Controller {
       pagination: "remote",
       ajaxURL: this.urlValue,
       ajaxSorting: true,
+      ajaxURLGenerator: this.buildAjaxURL,
       columns: [
         {
           field: "#",
@@ -180,5 +186,24 @@ export default class extends Controller {
 
   updateTableDigest (digest) {
     this.digestValue = digest
+  }
+
+  buildAjaxURL (url, config, params) {
+    let buildedUrl = url
+
+    if (url) {
+      // In theory tabulator request should always be GET requests
+      // So lets defer the decision to add support to another kind of requests
+      config.method = "get";
+      buildedUrl = new URL(url, window.location.origin)
+
+      const paramsList = generateParamsList(params)
+      paramsList.forEach((param) => buildedUrl.searchParams.set(param.key, param.value))
+
+      const body = formBody(this.tabulatedTarget)
+      buildedUrl = mergeFormDataEntries(buildedUrl, [...body.entries()])
+    }
+
+    return buildedUrl.toString();
   }
 }
