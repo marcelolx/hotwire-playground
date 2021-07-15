@@ -10,6 +10,8 @@ import { Turbo } from "@hotwired/turbo-rails"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 import 'bootstrap-icons/font/bootstrap-icons.css'
+import { registerTabulatorOverrides } from './use-tabulated-extend'
 
 ActiveStorage.start()
 window.Turbo = Turbo
+registerTabulatorOverrides()

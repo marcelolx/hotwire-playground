@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_30_011518) do
+ActiveRecord::Schema.define(version: 2021_07_14_235310) do
 
   create_table "broker_accounts", force: :cascade do |t|
     t.integer "login"
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 2021_06_30_011518) do
     t.string "website"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.decimal "credit", precision: 10, scale: 2
   end
 
   create_table "sub_menus", force: :cascade do |t|

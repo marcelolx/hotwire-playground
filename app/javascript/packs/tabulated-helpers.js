@@ -100,3 +100,51 @@ export function generateParamsList (data, prefix) {
 
   return output;
 }
+
+/**
+ * Module: HTMLTableImport
+ *
+ * Extract tabulator attribute options.
+ *
+ * This implementation overrides the tabulator default implementation
+ * to add the ability of extract attribute options which their values
+ * are objects.
+ *
+ * To be able extract objects the correct way you need to define the
+ * attribute value as a valid JSON object and starting with `object:`,
+ * like `tabulator-property='object:{ "objKey": 1 }'`.
+ *
+ * Extracted from Tabulator https://github.com/olifolkerd/tabulator
+ *
+ * @param {HTMLElement} element
+ * @param {Object} options
+ * @param {Object} defaultOptions
+ */
+export function tabulatorExtractOptions (element, options, defaultOptions) {
+  var attributes = element.attributes;
+  var optionsArr = defaultOptions ? Object.assign([], defaultOptions) : Object.keys(options);
+  var optionsList = {};
+
+  optionsArr.forEach(function(item){
+    optionsList[item.toLowerCase()] = item;
+  });
+
+  for(var index in attributes){
+    var attrib = attributes[index];
+    var name;
+
+    if(attrib && typeof attrib == "object" && attrib.name && attrib.name.indexOf("tabulator-") === 0){
+      name = attrib.name.replace("tabulator-", "");
+
+      if(typeof optionsList[name] !== "undefined") {
+        let attribValue = attrib.value
+        const isAnObject = attribValue.startsWith("object:")
+        if (isAnObject) {
+          attribValue = JSON.parse(attribValue.replace("object:", ""))
+        }
+
+        options[optionsList[name]] = this._attribValue(attribValue);
+      }
+    }
+  }
+};

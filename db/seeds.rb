@@ -39,6 +39,7 @@ SubMenu.create(
     district: Faker::Address.community,
     phone: Faker::PhoneNumber.phone_number,
     cellphone: Faker::PhoneNumber.cell_phone,
-    website: Faker::Internet.url
+    website: Faker::Internet.url,
+    credit: Faker::Number.decimal(l_digits: 2)
   )
 end
