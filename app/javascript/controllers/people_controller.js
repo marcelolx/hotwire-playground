@@ -74,7 +74,8 @@ export default class extends Controller {
           headerSort: false
         }
         */
-      ]
+      ],
+      rowContextMenu: this.rowMenuItems
     })
   }
 
@@ -186,6 +187,9 @@ export default class extends Controller {
   }
 
   calculateConfigDigest (config) {
+    if (config == undefined || config == null)
+      return ""
+
     const maped_config = config.map(el => Object.keys(el).map(key => `${key}:${el[key]}` ).join("::") ).join("|")
     return sha1(maped_config)
   }
@@ -221,5 +225,21 @@ export default class extends Controller {
     }
 
     return buildedUrl.toString();
+  }
+
+  /**
+   * Override this function to return the row menu
+   * elements that do you want to show to the user
+   * when he click with the right mouse button on
+   * the table.
+   *
+   * See Tabulator Row Context Menus section.
+   *
+   * http://tabulator.info/docs/4.9/menu
+   *
+   * @returns {Array<Object>} array of the menu items
+   */
+  rowMenuItems () {
+    return []
   }
 }
