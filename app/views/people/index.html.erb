@@ -29,7 +29,16 @@
         <th tabulator-visible="<%= column_visible("phone") %>">Phone</th>
         <th tabulator-visible="<%= column_visible("cellphone") %>">Cellphone</th>
         <th tabulator-visible="<%= column_visible("website") %>">Website</th>
-        <th tabulator-visible="<%= column_visible("credit") %>" tabulator-hozAlign="right" tabulator-bottomCalc="sum_2_digits_precision" tabulator-formatter="moneyBrl" tabulator-bottomCalcFormatter="moneyBrl">Credit</th>
+        <th
+          tabulator-visible="<%= column_visible("credit") %>"
+          tabulator-hozAlign="right"
+          tabulator-bottomCalc="sum_2_digits_precision"
+          tabulator-formatter="moneyBrl"
+          tabulator-bottomCalcFormatter="moneyBrl"
+          tabulator-headerTooltip="Credit client has available"
+        >
+        Credit
+        </th>
       </tr>
     </thead>
     <tbody id="people-table-header">

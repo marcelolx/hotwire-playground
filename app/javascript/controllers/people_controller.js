@@ -58,6 +58,22 @@ export default class extends Controller {
           resizable: false,
           headerMenu: this.headerMenu
         }
+
+        /*
+        TODO: Could be used as an option and only be included when the option is true
+        ,
+        {
+          field: 'select',
+          width: 40,
+          formatter: 'rowSelection',
+          titleFormatter: 'rowSelection',
+          titleFormatterParams:{
+            rowRange: 'active' //only toggle the values of the active filtered rows
+          },
+          hozAlign: 'center',
+          headerSort: false
+        }
+        */
       ]
     })
   }
