@@ -221,7 +221,7 @@ export default class extends Controller {
       paramsList.forEach((param) => buildedUrl.searchParams.set(param.key, param.value))
 
       const body = formBody(this.tabulatedTarget)
-      buildedUrl = mergeFormDataEntries(buildedUrl, [...body.entries()])
+      mergeFormDataEntries(buildedUrl, [...body.entries()])
     }
 
     return buildedUrl.toString();

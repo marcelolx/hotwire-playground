@@ -24,17 +24,19 @@ export class UseTabulated {
   async submitCaptured (evt) {
     evt.preventDefault()
 
-    let url = new URL(this.form.action)
+    const form = new FormData(this.form)
     let options = { responseKind: 'json' }
 
     // TODO: When filters being implemented we should send them too, at least I think
+    const mapedSortList = this.table.modules.sort.sortList.map((e) => {
+      return { field: e.field || e.column.field, dir: e.dir }
+    })
 
-    const mapedSortList = this.table.modules.sort.sortList.map((e) => { return { field: e.field || e.column.field, dir: e.dir } })
-    const body = this.body()
     if (this.isIdempotent()) {
       const sortParamsList = generateParamsList({ sorters: mapedSortList })
-      sortParamsList.forEach((param) => url.searchParams.set(param.key, param.value))
-      url = mergeFormDataEntries(url, [...body.entries()])
+      sortParamsList.forEach((param) => form.append(param.key, param.value))
+      options['query'] = form
+      //mergeFormDataEntries(url, [...body.entries()])
     } else {
       // TODO: If we support POST method then to send the sorters we need to do something like this
       // ----> body.set('sorters', JSON.stringify(rtt))
@@ -42,10 +44,10 @@ export class UseTabulated {
       // ----> const sortParamsList = generateParamsList({ sorters: mapedSortList })
       // ----> sortParamsList.forEach((param) => body.set(param.key, param.value))
       // But I'm not sure that it will come to the server as we expect, need to test it
-      options["body"] = body
+      options['body'] = form
     }
 
-    const request = new FetchRequest(this.form.method, url, options)
+    const request = new FetchRequest(this.form.method, this.form.action, options)
     const response = await request.perform()
     const responseBody = await response.json
     this.table.setData(responseBody.data)
@@ -58,10 +60,6 @@ export class UseTabulated {
 
   isIdempotent () {
     return this.form.method === 'get'
-  }
-
-  body () {
-    return formBody(this.form)
   }
 
   enhanceController () {

@@ -51,8 +51,6 @@ export function mergeFormDataEntries (url, entries) {
       url.searchParams.append(name, value)
     }
   }
-
-  return url
 }
 
 /**
